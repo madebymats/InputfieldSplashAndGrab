@@ -1,0 +1,115 @@
+fieldset.unsplash {
+    border: 0;
+    padding: 0;
+}
+
+.unsplashImage hr {
+	height: 1px;
+	background: #ccc;
+	border: none;
+}
+.unsplashResults {
+	padding-top: 10px;
+}
+
+.unsplashChosen {
+    padding-top: 30px;
+    min-height: 130px;;
+    display: none;
+}
+
+.unsplashChosen .fImage.selected {
+    width: 90px;
+    height: 90px;
+}
+
+
+.unsplashChosen h2 {
+	margin: 0;
+}
+
+div.fImage {
+	cursor: pointer;
+	float: left;
+	display: block;
+	overflow: hidden;
+	position: relative;
+	width: 210px;
+	height: 200px;
+    margin: 0 10px 10px 0;
+    background-size: contain;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: 1px solid lightgrey;
+}
+
+div.fImage:after{
+    content: "";
+    background-color: #eee;
+    background-image: linear-gradient(45deg, grey 25%, transparent 25%, transparent 75%, black 75%, black),
+    linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);
+    background-size: 60px 60px;
+    background-position: 0 0, 30px 30px;
+
+}
+
+div.userData {
+    display: none;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	background: rgba(5,5,5,.75);
+    color: white;
+    font-size: .95rem;
+    line-height: 1.35;
+    align-items: center;
+}
+
+div.fImage:hover div.userData {
+	display: flex;
+}
+
+div.userData p{
+    display: inline-block;
+    margin: 0 0 0 10px;
+}
+
+div.userData img{
+    display: block;
+    flex-shrink: 0;
+    width: 40px;
+    height: auto;
+}
+
+.unsplashSearch {
+	float: left;
+	padding: 2px;
+}
+
+.unsplashButton {
+	margin-left: 5px !important;
+}
+
+.unsplashLoading {
+	background: url(loading.gif) no-repeat top left;
+	min-height: 40px;
+	min-width: 40px;
+}
+.gridImg.selected {
+    opacity: .55;
+    
+}
+
+.gridImg.selected:before{
+    content: "";
+    border: 9px solid rgba(62,185,152,.5);
+    width: 210px;
+    height: 200px;
+    display: block;
+    opacity: .95;
+    background-color: rgba(62,185,152,.15);
+}
