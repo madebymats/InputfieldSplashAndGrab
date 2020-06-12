@@ -1,20 +1,24 @@
 $(document).ready(function () {
 
-    var images = [];
-    let apiKey = "TXtTckxpjGAtu33DZ712disnUcTMpMqR-AdPepgS0pU";
-    let startPage = 1,
+    let apiKey = "TXtTckxpjGAtu33DZ712disnUcTMpMqR-AdPepgS0pU",
+        startPage = 1,
         totalHits,
         totalPages,
         perPage,
         chosenOrientation,
         chosenColor,
-        chosenOrder;
-    // Config settings as defined by PageListPermissions.module
-    var moduleConfig = config.InputfieldSplashAndGrab;
+        chosenOrder,
+        moduleConfig = config.InputfieldSplashAndGrab; // Config settings as defined by PageListPermissions.module
 
     $('.unsplashSearch').val($("#Inputfield_title").val());
     $numGridImg = $(".gridImages .gridImage:not('.gridImage--delete')").length;
     $('.unsplashButton').on('click', function (e) {
+
+        //reset pager to defautl values
+        chosenOrientation = undefined;
+        chosenColor = undefined;
+        chosenOrder = undefined;
+
         e.preventDefault()
         $maxFiles = $("#splashAndGrab").data('maxfiles');
         $uploadedFiles = $("#splashAndGrab").data('uploadedfiles');
@@ -61,10 +65,9 @@ $(document).ready(function () {
                    noHits();
                 } 
                 
-                if(data.total > 0){
+               
                     renderPager();
-                } 
-
+               
                 $.each(data.results, function (item) {
                     let itemNo = data.results[item];
                     renderImage(itemNo);
@@ -83,6 +86,7 @@ $(document).ready(function () {
         let query = $("#unsplashMagic").val();
         chosenOrientation = this.value;
         if (!chosenOrientation) chosenOrientation = undefined; 
+        startPage = 1;
         getImages(query, startPage, perPage, chosenOrder, chosenColor, chosenOrientation);
     });
 
@@ -90,6 +94,7 @@ $(document).ready(function () {
         let query = $("#unsplashMagic").val();
         chosenColor = this.value;
         if (!chosenColor) chosenColor = undefined; 
+        startPage = 1;
         getImages(query, startPage, perPage, chosenOrder, chosenColor, chosenOrientation);
     });
 
@@ -97,6 +102,7 @@ $(document).ready(function () {
         let query = $("#unsplashMagic").val();
         chosenOrder = this.value;
         if (!chosenOrder) chosenOrder = undefined;
+        startPage = 1;
         getImages(query, startPage, perPage, chosenOrder, chosenColor, chosenOrientation);
     });
 
@@ -285,7 +291,7 @@ $(document).ready(function () {
 
 
 
-    window.addEventListener("beforeunload", function (evnt) {
+    window.addEventListener("beforeunload", function () {
         $(".unsplashChosen").children().each(function(){
             $.ajax({
                 type: 'GET',
