@@ -65,8 +65,7 @@ $(document).ready(function () {
                    noHits();
                 } 
                 
-               
-                    renderPager();
+                renderPager();
                
                 $.each(data.results, function (item) {
                     let itemNo = data.results[item];
@@ -208,11 +207,8 @@ $(document).ready(function () {
     $(".gridImages").on("click", ".gridImage, .gridImage--delete", function(){
         setTimeout(() => {
             $numGridImg = $(".gridImages .gridImage:not('.gridImage--delete')").length;
-    
         }, 100);
-        
-            
-        })
+    });
     
     function shake(thing) {
         var interval = 100;
@@ -271,13 +267,16 @@ $(document).ready(function () {
        
     }
 
+    //TODO build download link parameters based on image field settings
+
     function renderSelected(pic) {
         let firstName = pic.user.first_name;
         let lastName = pic.user.last_name ? " " + pic.user.last_name : "";
         let photographer = firstName + lastName;
         let description = pic.description ? pic.description : pic.alt_description;
+        let downloadUrl = moduleConfig.settings.maxWidth ? pic.urls.raw + "&w=" + moduleConfig.settings.maxWidth : pic.urls.regular ;
         $("<div data-download='" + pic.links.download_location + "' data-uid='" + pic.id + "' class='picked fImage selected' style='background-image: url(" + pic.urls.small + ")'>"
-            + "<input id='id-" + page_id + "-" + pic.id + "' type='hidden' name='unsplash_" + field_name + "*" + field_name + "*" + page_id + "*[]' value='" + pic.urls.regular + "*" + description + ". " + moduleConfig.i18n.photo_by + " " + photographer + ", Unsplash.' />"
+            + "<input id='id-" + page_id + "-" + pic.id + "' type='hidden' name='unsplash_" + field_name + "*" + field_name + "*" + page_id + "*[]' value='" + downloadUrl + "*" + description + ". " + moduleConfig.i18n.photo_by + " " + photographer + ", Unsplash.' />"
             +"<span class='uk-text-primary' uk-icon='icon: check'></span>"
             +"</div>")
         .appendTo($chosen)

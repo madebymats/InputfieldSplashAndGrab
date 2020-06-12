@@ -16,6 +16,7 @@ fieldset.unsplash {
     padding-top: 30px;
     min-height: 130px;;
     display: none;
+    overflow-x:  auto;
 }
 
 .unsplashChosen .fImage.selected {
@@ -94,11 +95,6 @@ div.userData img{
 	margin-left: 5px !important;
 }
 
-.unsplashLoading {
-	background: url(loading.gif) no-repeat top left;
-	min-height: 40px;
-	min-width: 40px;
-}
 .gridImg.selected {
     opacity: .55;
     

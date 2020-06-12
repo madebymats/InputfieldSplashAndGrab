@@ -65,8 +65,10 @@ class InputfieldSplashAndGrab extends InputfieldImage implements ConfigurableMod
 		$field = $inputfield->hasField;
 
 		$attrs = $this->getAttributes();
+
+		$maximumFiles = $this->maxFiles == 0 ? 'data-maxfiles="999"' : 'data-maxfiles="' . $this->maxFiles . '"'  ;
 			
-		$out .= '<hr /><fieldset id="splashAndGrab" data-uploadedfiles="' . $this->uploadedFiles . '" data-maxfiles="' . $this->maxFiles . '" class="unsplash" data-id="' . $page->id . '" data-name="'. $field->name .'">';
+		$out .= '<hr /><fieldset id="splashAndGrab" data-uploadedfiles="' . $this->uploadedFiles . '" ' . $maximumFiles . ' class="unsplash" data-id="' . $page->id . '" data-name="'. $field->name .'">';
 		$out .= '<div uk-grid class="uk-flex-bottom">';
 		$out .= '<div>';
 		$out .= '<label for="unsplashMagic" class="uk-form-label">' . __("Search Unsplash") . '';
@@ -124,6 +126,9 @@ class InputfieldSplashAndGrab extends InputfieldImage implements ConfigurableMod
 				'of' => __("of"),
 				'title_numoffiles' => __("The number of files you can select based on how many images you can upload and that are uploaded to this image field."),
 				'photo_by' => __("Photo by"),
+			),
+			'settings' => array(
+				'maxWidth' => $this->sizeField
 			)
         ));
 
@@ -190,8 +195,14 @@ class InputfieldSplashAndGrab extends InputfieldImage implements ConfigurableMod
 		}
         $fieldImage->value = $data['useField'];
         //$fieldTemplate->notes = "Number of pages " . count($reminders) . ".";
-		
-		$inputfields->add($fieldImage);
+		$inputfields->add($fieldImage); 
+
+		$fieldSize = $modules->get("InputfieldInteger");
+		$fieldSize->name = "sizeField";
+		$fieldSize->label = __("Maximum allowed width in pixels for images uploaded from Unsplash");
+		$fieldSize->value = $data["sizeField"];
+		$inputfields->add($fieldSize);
+
 
 		return $inputfields;
 
