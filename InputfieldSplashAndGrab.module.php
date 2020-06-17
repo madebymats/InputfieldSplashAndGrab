@@ -37,19 +37,14 @@ class InputfieldSplashAndGrab extends InputfieldImage implements ConfigurableMod
 		//Get current pages imagefields
 		$currentPage = $this->pages->get($this->input->get->id);
 		$currentFields = $currentPage->fields;
-        foreach ($currentFields as $cf) {
-            if ($cf->type == "FieldtypeImage" and in_array($cf->name, $this->useField)){
-				//var_dump($cf->name);
-				//var_dump($this->useField);
-				$fieldName = $cf->name;
-				$this->uploadedFiles = count($currentPage->$fieldName);
+        
+        		$this->uploadedFiles = count($currentPage->$fieldName);
 				$this->maxFiles = $cf->maxFiles;
 
 				$this->addHookAfter('InputfieldImage::render', $this, 'modifyInputfield');
 				$this->addHookBefore('ProcessPageEdit::execute', $this, 'addDependencies');
 				$this->addHookAfter('ProcessPageEdit::processInput', $this, 'processInput');
-			}
-		}	
+		
 	}
 
 	/**
