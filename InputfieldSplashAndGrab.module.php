@@ -39,6 +39,8 @@ class InputfieldSplashAndGrab extends InputfieldImage implements ConfigurableMod
 		$currentFields = $currentPage->fields;
         foreach ($currentFields as $cf) {
             if ($cf->type == "FieldtypeImage" and in_array($cf->name, $this->useField)){
+				//var_dump($cf->name);
+				//var_dump($this->useField);
 				$fieldName = $cf->name;
 				$this->uploadedFiles = count($currentPage->$fieldName);
 				$this->maxFiles = $cf->maxFiles;
@@ -46,7 +48,7 @@ class InputfieldSplashAndGrab extends InputfieldImage implements ConfigurableMod
 				$this->addHookAfter('InputfieldImage::render', $this, 'modifyInputfield');
 				$this->addHookBefore('ProcessPageEdit::execute', $this, 'addDependencies');
 				$this->addHookAfter('ProcessPageEdit::processInput', $this, 'processInput');
-				}
+			}
 		}	
 	}
 
@@ -58,7 +60,7 @@ class InputfieldSplashAndGrab extends InputfieldImage implements ConfigurableMod
 	protected function modifyInputfield(HookEvent $event) {
 		// Only for ProcessPageEdit or ProcessUser
 		if($this->process != 'ProcessPageEdit' && $this->process != 'ProcessUser') return;
-
+		if(!in_array($event->object->name, $this->useField)) return;
 		$inputfield = $event->object;
 		$out = $event->return;
 		$page = $inputfield->hasPage;
