@@ -274,7 +274,7 @@ $(document).ready(function () {
         let lastName = pic.user.last_name ? " " + pic.user.last_name : "";
         let photographer = firstName + lastName;
         let description = pic.description ? pic.description : pic.alt_description;
-        let downloadUrl = moduleConfig.settings.maxWidth ? pic.urls.raw + "&w=" + moduleConfig.settings.maxWidth : pic.urls.regular ;
+        let downloadUrl = moduleConfig.settings.maxWidth ? pic.urls.raw + "&fm=jpg&w=" + moduleConfig.settings.maxWidth  : pic.urls.regular ;
         $("<div data-download='" + pic.links.download_location + "' data-uid='" + pic.id + "' class='picked fImage selected' style='background-image: url(" + pic.urls.small + ")'>"
             + "<input id='id-" + page_id + "-" + pic.id + "' type='hidden' name='unsplash_" + field_name + "*" + field_name + "*" + page_id + "*[]' value='" + downloadUrl + "*" + description + ". " + moduleConfig.i18n.photo_by + " " + photographer + ", Unsplash.' />"
             +"<span class='uk-text-primary' uk-icon='icon: check'></span>"

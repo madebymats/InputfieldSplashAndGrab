@@ -34,13 +34,7 @@ class InputfieldSplashAndGrab extends InputfieldImage implements ConfigurableMod
 	 * Ready
 	 */
 	public function ready() {
-		//Get current pages imagefields
-		$currentPage = $this->pages->get($this->input->get->id);
-		$currentFields = $currentPage->fields;
-        
-        		$this->uploadedFiles = count($currentPage->$fieldName);
-				$this->maxFiles = $cf->maxFiles;
-
+		
 				$this->addHookAfter('InputfieldImage::render', $this, 'modifyInputfield');
 				$this->addHookBefore('ProcessPageEdit::execute', $this, 'addDependencies');
 				$this->addHookAfter('ProcessPageEdit::processInput', $this, 'processInput');
@@ -62,6 +56,14 @@ class InputfieldSplashAndGrab extends InputfieldImage implements ConfigurableMod
 		$field = $inputfield->hasField;
 
 		$attrs = $this->getAttributes();
+
+		//Get current pages imagefields
+        $currentPage = $this->pages->get($this->input->get->id);
+        $currentFields = $currentPage->fields;
+        
+		//$this->uploadedFiles = count($currentPage->$fieldName);
+		//$this->maxFiles = $cf->maxFiles;
+
 
 		$maximumFiles = $this->maxFiles == 0 ? 'data-maxfiles="999"' : 'data-maxfiles="' . $this->maxFiles . '"'  ;
 			
@@ -158,20 +160,26 @@ class InputfieldSplashAndGrab extends InputfieldImage implements ConfigurableMod
             $is_image_field = $field->type instanceof FieldtypeImage;
 			$field_value = $page->getUnformatted($field_name);
 			
+			$page->of(false);
+
 			foreach ($value as $key => $val) {
+
 				$img = explode("*", $val, 2); // $image[0] is url, $image[1] is description
+				
+				if ($field->maxFiles == 1 && count($field_value)) {
+					$field_value->removeAll();
+				}
 
-				$page->of(false);
-            if ($field->maxFiles == 1 && count($field_value)) {
-                $field_value->removeAll();
-            }
-
-            $pagefile = new Pageimage($field_value, $img[0]);
-			$field_value->add($pagefile);
-			$image = $field_value->last();
-			$image->description = $img[1];
-			$page->save($field_value);
+				$pagefile = new Pageimage($field_value, $img[0]);
+				$pagefile->rename($pagefile . ".jpg");
+				$field_value->add($pagefile);
+				$image = $field_value->last();
+				$image->description = $img[1];
+				$page->save();
+				unset($pagefile);
 			}
+
+
 		}
     }	
 
