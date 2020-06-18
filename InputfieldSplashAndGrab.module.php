@@ -162,9 +162,9 @@ class InputfieldSplashAndGrab extends InputfieldImage implements ConfigurableMod
 			
 			$page->of(false);
 
-			foreach ($value as $key => $val) {
-
-				$img = explode("*", $val, 2); // $image[0] is url, $image[1] is description
+			foreach ($value as $keytwo => $val) {
+				
+				$img = explode("*", $val); // $image[0] is url, $image[1] is description
 				
 				if ($field->maxFiles == 1 && count($field_value)) {
 					$field_value->removeAll();
@@ -175,9 +175,9 @@ class InputfieldSplashAndGrab extends InputfieldImage implements ConfigurableMod
 				$field_value->add($pagefile);
 				$image = $field_value->last();
 				$image->description = $img[1];
-				$page->save();
-				unset($pagefile);
 			}
+			
+			$page->save();
 
 
 		}
