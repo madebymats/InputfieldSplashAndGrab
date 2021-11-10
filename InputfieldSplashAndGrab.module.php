@@ -49,7 +49,7 @@ class InputfieldSplashAndGrab extends InputfieldImage implements ConfigurableMod
 	protected function modifyInputfield(HookEvent $event) {
 		// Only for ProcessPageEdit or ProcessUser
 		if($this->process != 'ProcessPageEdit' && $this->process != 'ProcessUser') return;
-		if(!in_array($event->object->name, $this->useField)) return;
+		if(!$this->useField || !in_array($event->object->name, $this->useField)) return;
 		$inputfield = $event->object;
 		$out = $event->return;
 		$page = $inputfield->hasPage;
