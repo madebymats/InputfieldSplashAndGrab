@@ -1,5 +1,4 @@
-<?php
-namespace ProcessWire;
+<?php namespace ProcessWire;
 
 class InputfieldSplashAndGrab extends InputfieldImage implements ConfigurableModule {
 
@@ -67,17 +66,17 @@ class InputfieldSplashAndGrab extends InputfieldImage implements ConfigurableMod
 
 		$maximumFiles = $this->maxFiles == 0 ? 'data-maxfiles="999"' : 'data-maxfiles="' . $this->maxFiles . '"'  ;
 			
-		$out .= '<hr /><fieldset id="splashAndGrab" data-uploadedfiles="' . $this->uploadedFiles . '" ' . $maximumFiles . ' class="unsplash" data-id="' . $page->id . '" data-name="'. $field->name .'">';
+		$out .= '<hr /><fieldset id="splashAndGrab_' . $field->id . '" data-uploadedfiles="' . $this->uploadedFiles . '" ' . $maximumFiles . ' class="unsplash" data-id="' . $page->id . '" data-name="'. $field->name .'" data-fieldid="' . $field->id . '">';
 		$out .= '<div uk-grid class="uk-flex-bottom">';
 		$out .= '<div>';
-		$out .= '<label for="unsplashMagic" class="uk-form-label">' . __("Search Unsplash") . '';
-		$out .= '<input type="text" id="unsplashMagic" class="unsplashSearch"/></label>';
+		$out .= '<label for="unsplashMagic_' . $field->id . '" class="uk-form-label">' . __("Search Unsplash") . '';
+		$out .= '<input type="text" id="unsplashMagic_' . $field->id . '" class="unsplashSearch"/></label>';
 		$out .= '</div>';
 		$out .= '<div>';
 		$out .= '<button class="unsplashButton ui-button ui-widget ui-corner-all ui-state-default"><span class="ui-button-text">' . __("Search") . '</span></button>';
 		$out .= '</div>';
 		$out .= '</div>';
-		$out .= '<div class="unsplashChosen"></div><div class="unsplashResults"><div class="resultsItems"></div></div></fieldset>';
+		$out .= '<div id="unsplashChosen_' . $field->id . '" class="unsplashChosen"></div><div id="unsplashResults_' . $field->id . '" class="unsplashResults"><div class="resultsItems"></div></div></fieldset>';
 		$event->return = $out;
 
 	}
@@ -171,7 +170,7 @@ class InputfieldSplashAndGrab extends InputfieldImage implements ConfigurableMod
 				}
 
 				$pagefile = new Pageimage($field_value, $img[0]);
-				$pagefile->rename($pagefile . ".jpg");
+				$pagefile->rename(str_replace('.', '-', $pagefile) . ".jpg");
 				$field_value->add($pagefile);
 				$image = $field_value->last();
 				$image->description = $img[1];
@@ -192,7 +191,7 @@ class InputfieldSplashAndGrab extends InputfieldImage implements ConfigurableMod
 		$inputfields = new InputfieldWrapper();
 
         $fieldImage = $modules->get("InputfieldAsmSelect");
-        $fieldImage->name = "useField";
+        $fieldImage->name = 'useField';
         $fieldImage->label = __("Image fields that should use the module.");
         $fieldImage->description = __("Choose the fields which should use the module.");
         foreach ($this->getImagefields() as $img) {
