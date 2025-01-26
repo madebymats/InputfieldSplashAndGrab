@@ -5,7 +5,7 @@ class InputfieldSplashAndGrab extends InputfieldImage implements ConfigurableMod
 	public static function getModuleInfo() {
 		return array(
 			'title' => 'SplashAndGrab',
-			'version' => 100,
+			'version' => '1.0.2',
 			'icon' => 'picture-o',
 			'author' => 'Mats Neander',
 			'summary' => 'Adds possibility to search and download free to use images from Unsplash.',
@@ -126,7 +126,8 @@ class InputfieldSplashAndGrab extends InputfieldImage implements ConfigurableMod
 				'photo_by' => __("Photo by"),
 			),
 			'settings' => array(
-				'maxWidth' => $this->sizeField
+				'maxWidth' => $this->sizeField,
+				'apiKey' => $this->apiKey,
 			)
         ));
 
@@ -207,6 +208,11 @@ class InputfieldSplashAndGrab extends InputfieldImage implements ConfigurableMod
 		$fieldSize->value = $data["sizeField"];
 		$inputfields->add($fieldSize);
 
+		$apiKey = $modules->get("InputfieldText");
+		$apiKey->name = "apiKey";
+		$apiKey->label = __("API Key for your Unsplash account");
+		$apiKey->value = $data["apiKey"];
+		$inputfields->add($apiKey);
 
 		return $inputfields;
 

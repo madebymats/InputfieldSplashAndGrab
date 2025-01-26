@@ -1,10 +1,10 @@
 $(document).ready(function () {
 
-     let apiKey = "TXtTckxpjGAtu33DZ712disnUcTMpMqR-AdPepgS0pU",
-        totalHits,
+	let totalHits,
         totalPages,
         perPage,
-        moduleConfig = config.InputfieldSplashAndGrab; // Config settings as defined by PageListPermissions.module
+        moduleConfig = config.InputfieldSplashAndGrab, // Config settings as defined by PageListPermissions.module
+        apiKey = moduleConfig.settings.apiKey;
 
     const $maxFiles = [],
           $uploadedFiles = [],
